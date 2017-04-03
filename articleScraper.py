@@ -18,7 +18,7 @@ def formatArticle(article):
             break
     tArticle = article.get_text()[0:start]
     Time = soup.find(attrs={"time": "datetime"})
-    print Time
+    print(Time)
     return tArticle
 
 def getNumPages():

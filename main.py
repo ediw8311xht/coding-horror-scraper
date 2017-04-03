@@ -1,5 +1,6 @@
 import os.path
 import articleScraper
+import pygame
 
 def readFile(File):
     String = ""
@@ -18,4 +19,4 @@ if __name__ == "__main__":
         a = readFile(fn)
     numPages = articleScraper.getNumPages()
     less = numPages - int(a[0:10].strip())
-    print less
+    print(less)
