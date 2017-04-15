@@ -1,6 +1,5 @@
 import os.path
 import article_scraper
-import pygame
 from readwrite import read_file
 
 if __name__ == "__main__":
