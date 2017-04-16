@@ -6,8 +6,9 @@ def format_time(Time):
     month_num = {"Jan": 1, "Feb": 2, "Mar": 3,
                  "Apr": 4, "May": 5, "Jun": 6,
                  "Jul": 7, "Aug": 8, "Sep": 9,
-                 "Oct": 10, "Nov": 11, "Dec": 12}    
-#Gets articles from certain page. Returns list of elemts.
+                 "Oct": 10, "Nov": 11, "Dec": 12}
+    
+#Gets articles from certain page. Returns list of elements.
 def get_articles(page):
     articles = []
     url = "https://blog.codinghorror.com/page/%i/" % (page)

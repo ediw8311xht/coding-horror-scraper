@@ -6,4 +6,5 @@ class gui_interface(object):
         self.width = width
         self.height = height
         self.data_file = data_file
-    
+    def update_screen(self):
+        
