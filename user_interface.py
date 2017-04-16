@@ -8,23 +8,40 @@ class GuiController(object):
         self.data_file = data_file
         pygame.init()
         pygame.display.set_caption(caption)
-        self.screen = pygame.display.set_mode((self.width, self.height))
+        self.update_screen_size()
         self.clock = pygame.time.Clock()
+        self.draw_state = 1
+        self.draw_update = True
+    def update_screen_size(self):
+        self.screen = pygame.display.set_mode((self.width, self.height), RESIZABLE)
     def update_screen(self):
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
-                sys.exit()                
+                sys.exit()
+            elif event.type == VIDEORESIZE:
+                print(1)
+                self.width = event.w
+                self.height = event.h
+                self.update_screen_size()
+                self.draw_update = True
         pygame.display.update()
     def draw_start(self):
-        Start = pygame.Rect(self.width * 0.25, self.height * 0.1,
-                            self.width * 0.15, self.height * 0.05)
+        margin = min(self.width * 0.05, self.height * 0.05)
+        rect_hsize = self.height * 0.25 - margin
+        Start = pygame.Rect(margin, self.height - margin - rect_hsize,
+                            self.width * 0.4 - margin, self.height * 0.25 - margin)
         pygame.draw.rect(self.screen, pygame.Color(0, 255, 0),
-                         Start, int(min(self.width * 0.01, self.height * 0.01)))
+                         Start, 0)
+    def draw(self):
+        if self.draw_state == 1:
+            self.draw_start()
     def main(self):
-        self.draw_start()
         while 1:
             self.update_screen()
+            if self.draw_update == True:
+                self.draw()
+                self.draw_update = False
             self.clock.tick(60)
 
 if __name__ == "__main__":
