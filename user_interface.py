@@ -20,19 +20,18 @@ class GuiController(object):
                 pygame.quit()
                 sys.exit()
             elif event.type == VIDEORESIZE:
-                print(1)
                 self.width = event.w
                 self.height = event.h
                 self.update_screen_size()
                 self.draw_update = True
         pygame.display.update()
     def draw_start(self):
+        self.courier = pygame.font.SysFont("courier", 15)
         margin = min(self.width * 0.05, self.height * 0.05)
         rect_hsize = self.height * 0.25 - margin
-        Start = pygame.Rect(margin, self.height - margin - rect_hsize,
-                            self.width * 0.4 - margin, self.height * 0.25 - margin)
-        pygame.draw.rect(self.screen, pygame.Color(0, 255, 0),
-                         Start, 0)
+        Start = pygame.Rect(margin, self.height - margin - rect_hsize, self.width * 0.4 - margin, self.height * 0.25 - margin)
+        pygame.draw.rect(self.screen, pygame.Color(0, 255, 0), Start, 0)
+        self.screen.blit(self.font.render('Hello!', True, (255,0,0)), (200, 100))
     def draw(self):
         if self.draw_state == 1:
             self.draw_start()

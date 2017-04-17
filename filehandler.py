@@ -1,5 +1,8 @@
 import readwrite
 from article_scraper import format_date
+from time import strftime
+from datetime import datetime
+
 class FileHandler(object):
     def __init__(self, savefile):
         self.savefile = savefile
@@ -14,6 +17,7 @@ class FileHandler(object):
             for i in a:
                 if i[0:2] == "::":
                     self.dates.append(format_date(i[2:].split()))
+        self.dates = self.dates.sort()
     def return_dates(self):
         return self.dates
 
