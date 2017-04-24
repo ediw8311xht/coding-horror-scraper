@@ -31,7 +31,7 @@ class GuiController(object):
         rect_hsize = self.height * 0.25 - margin
         Start = pygame.Rect(margin, self.height - margin - rect_hsize, self.width * 0.4 - margin, self.height * 0.25 - margin)
         pygame.draw.rect(self.screen, pygame.Color(0, 255, 0), Start, 0)
-        self.screen.blit(self.font.render('Hello!', True, (255,0,0)), (200, 100))
+        self.screen.blit(self.courier.render('Hello!', True, (255,0,0)), (200, 100))
     def draw(self):
         if self.draw_state == 1:
             self.draw_start()
