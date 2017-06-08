@@ -1,49 +1,68 @@
-import pygame, sys
-from pygame.locals import *
+import readwrite
+import time
+import article_scraper
 
-class GuiController(object):
-    def __init__(self, width, height, caption, data_file):
-        self.width = width
-        self.height = height
-        self.data_file = data_file
-        pygame.init()
-        pygame.display.set_caption(caption)
-        self.update_screen_size()
-        self.clock = pygame.time.Clock()
-        self.draw_state = 1
-        self.draw_update = True
-    def update_screen_size(self):
-        self.screen = pygame.display.set_mode((self.width, self.height), RESIZABLE)
-    def update_screen(self):
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == VIDEORESIZE:
-                self.width = event.w
-                self.height = event.h
-                self.update_screen_size()
-                self.draw_update = True
-        pygame.display.update()
-    def draw_start(self):
-        self.courier = pygame.font.SysFont("courier", 15)
-        margin = min(self.width * 0.05, self.height * 0.05)
-        rect_hsize = self.height * 0.25 - margin
-        Start = pygame.Rect(margin, self.height - margin - rect_hsize, self.width * 0.4 - margin, self.height * 0.25 - margin)
-        pygame.draw.rect(self.screen, pygame.Color(0, 255, 0), Start, 0)
-        self.screen.blit(self.courier.render('Hello!', True, (255,0,0)), (200, 100))
-    def draw(self):
-        if self.draw_state == 1:
-            self.draw_start()
-    def main(self):
-        while 1:
-            self.update_screen()
-            if self.draw_update == True:
-                self.draw()
-                self.draw_update = False
-            self.clock.tick(60)
+def main_ui():
+    print("-----------------------------------------------------------------")
+    while 1:
+        print("This program scrapes coding horror website for articles.")
+        print("Type !commands for list of commands.")
+        try:
+            a = input("> ")
+        except:
+            a = "invalid input"
+        parsed = parse_input(a)
+        if parsed == "exit":
+            break
+        print("\n")
+
+def page_parser(page_string):
+    pages = []
+    for i in page_string.split():
+        a = i.split("-")
+        if len(a) == 2:
+            if a[0].isdigit() and a[1].isdigit():
+                for i in range(int(a[0]), int(a[1]) + 1):
+                    pages.append(i)
+            else:
+                return False
+
+def print_commands():
+    #get pages
+    print("get pages")
+    print("  Gets articles from coding horror website on")
+    print("  pages specified and prints to txt file")
+    print("  Examples and Outputs:")
+    print("    get pages 3-28")
+    print("    Output: writes pages 3-28 into txt file")
+    print("    get pages 3 9")
+    print("    Output: writes pages 3 and 9 into txt file")
+    print("    get pages")
+    print("    Output: gets all pages and puts into txt file")
+    #exit
+    print("exit")
+    print("  exits program")
+    #!commands
+    print("!commands")
+    print("  Prints list of commands")
+    
+def parse_input(user_input):
+    user_input = user_input.lower().split()
+    if user_input[0] == "exit":
+        print("")
+        print("exiting now...")
+        time.sleep(0.5)
+        return "exit"
+    elif user_input[0:2] == ["get", "pages"]:
+        pages = "".join(user_input[2:])
+        
+        return "get pages"
+    elif user_input[0] == "!commands":
+        print_commands()
+        return "!commands"
+    else:
+        print("invalid input, type !commands for list of commands")
+        return "invalid input"
 
 if __name__ == "__main__":
-    #testing
-    a = GuiController(500, 500, "abcd", "atat")
-    a.main()
+    main_ui()
