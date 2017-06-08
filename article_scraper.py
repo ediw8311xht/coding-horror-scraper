@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
+import readwrite
 import requests
 import time
 
@@ -46,3 +47,20 @@ def get_num_pages():
     soup = BeautifulSoup(page.content, "html.parser")
     pageNum = soup.find("span", class_="page-number").getText()
     return int(pageNum[10:len(pageNum)])
+
+if __name__ == "__main__":
+    while 1:
+        a = input("> ")
+        if a == "exit":
+            break
+        a = a.lower().split()
+        if a[0:2] == ["get", "pages"]:
+            pages = a[2:]
+            for i in pages:
+                article_page = get_articles(int(i))
+                for j in article_page:
+                    f = format_article(j)
+                    a = readwrite.read_file("articles.txt").split("\n")
+                    line_n = len(a)
+                    readwrite.write_line(format_date(f[0].split()), line_n, "articles.txt")
+                    readwrite.write_line(f[1], line_n + 1, "articles.txt")
