@@ -4,6 +4,8 @@ import readwrite
 import requests
 import time
 
+saved_data_file = "saved data.txt"
+
 def get_seconds(Date):
     return time.mktime(Date.timetuple())
 
@@ -60,7 +62,3 @@ if __name__ == "__main__":
                 article_page = get_articles(int(i))
                 for j in article_page:
                     f = format_article(j)
-                    a = readwrite.read_file("articles.txt").split("\n")
-                    line_n = len(a)
-                    readwrite.write_line(format_date(f[0].split()), line_n, "articles.txt")
-                    readwrite.write_line(f[1], line_n + 1, "articles.txt")
